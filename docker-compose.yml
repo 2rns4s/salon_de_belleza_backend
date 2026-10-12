@@ -1,0 +1,17 @@
+# Contenedor PostgreSQL para la entrega.
+services:
+  postgres-sena:
+    image: 'postgres:17'
+    container_name: sena_persistencia_db
+    environment:
+      POSTGRES_DB: sena_persistencia_db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5433:5432"
+    volumes:
+      - sena_persistencia_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  sena_persistencia_data:

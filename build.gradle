@@ -1,0 +1,41 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.5.7'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.sena'
+version = '0.0.1-SNAPSHOT'
+description = 'Entrega SENA - Capa de persistencia JPA (extraida de SalonDeBelleza)'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Unica dependencia de persistencia: Spring Data JPA (incluye Hibernate + HikariCP).
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // Driver JDBC de PostgreSQL (motor usado por el proyecto original).
+    runtimeOnly 'org.postgresql:postgresql'
+
+    // Lombok: genera getters/setters/constructores de las entities (igual que el proyecto original).
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
