@@ -1,12 +1,8 @@
 # Entrega SENA — Capa de Persistencia JPA
 
-Mini-proyecto Spring Boot **autónomo** que aísla la **capa de persistencia JPA**
-extraída del proyecto `SalonDeBelleza`. Sirve como muestra de cómo se mapea el
+Mini-proyecto Spring Boot como muestra de cómo se mapea el
 modelo a la base de datos y cómo se interactúa con ella mediante repositorios de
 Spring Data JPA.
-
-> Esta carpeta (`sena/`) está en el `.gitignore` del repositorio real, así que
-> **no se versiona**: el repo oficial conserva su implementación tal cual.
 
 ---
 
@@ -39,8 +35,7 @@ personalizados** para la lógica de negocio:
   `existsByCorreo`, `findByNombreContainingIgnoreCase`, etc.
 - **`@Query` con JPQL**: detección de citas solapadas por empleado/recurso,
   citas del día, conteos por estado y top de servicios realizados.
-- **Bloqueos pesimistas** (`@Lock`) y **grafos de entidad** (`@EntityGraph`)
-  tal como en el proyecto original.
+- **Bloqueos pesimistas** (`@Lock`) y **grafos de entidad** (`@EntityGraph`).
 
 ---
 
@@ -68,17 +63,8 @@ y `telefono` sean sensibles es de negocio (registrada en los specs), pero el
 
 ### Base de datos dedicada y aislada
 
-Este mini-proyecto trae su **propio contenedor PostgreSQL** (`docker-compose.yml`),
-completamente separado del entorno real del proyecto:
-
-| | Contenedor SENA (este proyecto) | Contenedor real (NO se toca) |
-|---|---|---|
-| Base | `sena_persistencia_db` | `salon_de_belleza_db` |
-| Puerto host | **5433** | 5432 |
-| Volumen | propio | propio |
-
+Este mini-proyecto trae su **Contenedor PostgreSQL** (`docker-compose.yml`):
 > Importante: la demo ejecuta `deleteAll()` al iniciar para ser idempotente.
-> Por eso usa una base **separada**: así nunca borra datos de la base real.
 
 Levantar el contenedor (desde esta carpeta):
 
@@ -91,8 +77,8 @@ Credenciales (ya configuradas en `application.properties`):
 | Clave | Valor |
 |---|---|
 | URL | `jdbc:postgresql://localhost:5433/sena_persistencia_db` |
-| Usuario | `sena_user` |
-| Contraseña | `sena_password` |
+| Usuario | `user` |
+| Contraseña | `password` |
 
 Para apagarlo (y opcionalmente borrar sus datos con `-v`):
 
@@ -122,19 +108,13 @@ Al arrancar:
    a partir de las anotaciones de las entities.
 3. El `CommandLineRunner` `DemoPersistencia` ejecuta un guión completo e imprime
    cada paso por consola.
-
-### Solo compilar (sin base de datos)
-
-```bash
-.\gradlew.bat compileJava
-```
-
+   
 ---
 
 ## Qué demuestra la ejecución
 
 `DemoPersistencia` resuelve el "¿cómo interactúo con la capa si está aislada?":
-en el proyecto real los repositorios se usan a través de **puertos** del dominio
+en el proyecto propuesto los repositorios se usan a través de **puertos** del dominio
 (los `PersistenceAdapter`). Aquí ese papel lo cumple el `CommandLineRunner`, que
 inyecta los repositorios directamente y recorre:
 
