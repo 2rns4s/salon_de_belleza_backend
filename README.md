@@ -1,4 +1,4 @@
-Capa de Persistencia JPA
+# Capa de Persistencia JPA
 
 Mini-proyecto Spring Boot como muestra de cómo se mapea el
 modelo a la base de datos y cómo se interactúa con ella mediante repositorios de
